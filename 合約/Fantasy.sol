@@ -5,9 +5,11 @@ contract Ready {
 
   address public owner;
 
+  uint public Order;
   uint public MaxPlayer;
   uint public TeamIndex;
 
+  uint[] public Number;
   address[] public players;
 
   mapping(address => mapping(uint => Ateam)) League;
@@ -20,40 +22,43 @@ contract Ready {
 
 
   constructor() public {
+      Order = 0;
       MaxPlayer = 0;
       TeamIndex = 0;
       owner == msg.sender;
   }
 
-  function price() public payable {
+
+  function createTeam(string memory _name) public payable {
     //ˇˇˇ玩家付入場費(應該可以這樣寫？)
     require(msg.value > .0001 ether);
-    MaxPlayer++;
-    players.push(msg.sender);
-  }
-
-  function createTeam(string memory _name) public {
     //ˇˇˇ假設一個玩家可以有12個球員，SBL總共有146名成員，所以應該可以容納10個玩家。
     require(MaxPlayer < 11);
     //ˇˇˇ確認玩家沒有重複
     require(TeamOwner[TeamIndex] != msg.sender);
-
-
     //ˇˇˇ來源:助教<3
     TeamIndex++;
-    Ateam memory Team = Ateam(TeamIndex, _name, msg.sender);
+    MaxPlayer++;
+    Ateam memory Team = Ateam(TeamIndex, MaxPlayer, _name, msg.sender);
     League[msg.sender][TeamIndex] = Team;
     TeamOwner[TeamIndex] = msg.sender;
+
   }
 
+
   function ReadyStart() public{
-      require(MaxPlayer > 9);
+    //準備要開始遊戲
+    require(MaxPlayer > 9);
+
+
+
   }
 
 
 
   struct Ateam{
     uint id;
+    uint order;
     string name;
     address add;
 
