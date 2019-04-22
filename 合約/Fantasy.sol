@@ -6,33 +6,35 @@ contract Ready {
   uint MaxPlayer = 0;
   address[] public players;
 
-  function controller() public {
-    owner == msg.sneder;
-  }
-
   modifier ownerOnly(){
     require(msg.sender == owner);
     _;
   }
 
+    constructor() public payable {
+
+      owner == msg.sender;
+  }
+
+
   function price() public payable {
     //ˇˇˇ假設一個玩家可以有12個球員，SBL總共有146名成員，所以應該可以容納10個玩家。
     require(MaxPlayer < 11);
     //ˇˇˇ玩家付入場費(應該可以這樣寫？)
-    require(msg.value > .0001);
+    require(msg.value > .0001 ether);
     MaxPlayer++;
     players.push(msg.sender);
   }
 
-  function CreateAteam(string _name, uint _id) {
-    require()
-  }
+
 
 
 
   struct Ateam{
     string name;
     uint id;
+    address add;
+
 
   }
 
