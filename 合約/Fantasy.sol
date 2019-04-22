@@ -25,12 +25,7 @@ contract Ready {
       owner == msg.sender;
   }
 
-
-
-
   function price() public payable {
-    //ˇˇˇ假設一個玩家可以有12個球員，SBL總共有146名成員，所以應該可以容納10個玩家。
-    require(MaxPlayer < 11);
     //ˇˇˇ玩家付入場費(應該可以這樣寫？)
     require(msg.value > .0001 ether);
     MaxPlayer++;
@@ -38,14 +33,23 @@ contract Ready {
   }
 
   function createTeam(string memory _name) public {
-    //ˇˇˇ來源:助教 =)
+    //ˇˇˇ假設一個玩家可以有12個球員，SBL總共有146名成員，所以應該可以容納10個玩家。
+    require(MaxPlayer < 11);
+    //ˇˇˇ確認玩家沒有重複
+    require(TeamOwner[TeamIndex] != msg.sender);
+
+
+    //ˇˇˇ來源:助教<3
     TeamIndex++;
     Ateam memory Team = Ateam(TeamIndex, _name, msg.sender);
     League[msg.sender][TeamIndex] = Team;
     TeamOwner[TeamIndex] = msg.sender;
-
-
   }
+
+  function ReadyStart() public{
+      require(MaxPlayer > 9);
+  }
+
 
 
   struct Ateam{
