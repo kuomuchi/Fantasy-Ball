@@ -9,7 +9,6 @@ contract Ready {
   uint public MaxPlayer;
   uint public TeamIndex;
 
-  uint[] public Number;
   address[] public players;
 
   mapping(address => mapping(uint => Ateam)) League;
@@ -27,6 +26,18 @@ contract Ready {
       TeamIndex = 0;
       owner == msg.sender;
   }
+
+
+   struct Ateam{
+    uint id;
+    uint order;
+    string name;
+    address add;
+
+
+  }
+
+
 
 
   function createTeam(string memory _name) public payable {
@@ -49,18 +60,6 @@ contract Ready {
   function ReadyStart() public{
     //準備要開始遊戲
     require(MaxPlayer > 9);
-
-
-
-  }
-
-
-
-  struct Ateam{
-    uint id;
-    uint order;
-    string name;
-    address add;
 
 
   }
