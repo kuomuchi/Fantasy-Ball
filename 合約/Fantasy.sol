@@ -2,19 +2,30 @@ pragma solidity ^0.5.0;
 
 contract Ready {
 
+
   address public owner;
-  uint MaxPlayer = 0;
+
+  uint public MaxPlayer;
+  uint public TeamIndex;
+
   address[] public players;
+
+  mapping(address => mapping(uint => Ateam)) League;
+  mapping(uint => address) TeamOwner;
 
   modifier ownerOnly(){
     require(msg.sender == owner);
     _;
   }
 
-    constructor() public payable {
 
+  constructor() public {
+      MaxPlayer = 0;
+      TeamIndex = 0;
       owner == msg.sender;
   }
+
+
 
 
   function price() public payable {
@@ -26,13 +37,20 @@ contract Ready {
     players.push(msg.sender);
   }
 
+  function createTeam(string memory _name) public {
+    //ˇˇˇ來源:助教 =)
+    TeamIndex++;
+    Ateam memory Team = Ateam(TeamIndex, _name, msg.sender);
+    League[msg.sender][TeamIndex] = Team;
+    TeamOwner[TeamIndex] = msg.sender;
 
 
+  }
 
 
   struct Ateam{
-    string name;
     uint id;
+    string name;
     address add;
 
 
