@@ -30,10 +30,11 @@ contract Ready {
 
    struct Ateam{
     uint id;
+    uint Population;
     uint order;
     string name;
     address add;
-
+    //假的array[] YA
 
   }
 
@@ -47,19 +48,31 @@ contract Ready {
     require(MaxPlayer < 11);
     //ˇˇˇ確認玩家沒有重複
     require(TeamOwner[TeamIndex] != msg.sender);
-    //ˇˇˇ來源:助教<3
+    //ˇˇˇ來源:助教b
     TeamIndex++;
     MaxPlayer++;
-    Ateam memory Team = Ateam(TeamIndex, MaxPlayer, _name, msg.sender);
+    //ˇˇˇ假設在最後面有一個空幾集合
+    Ateam memory Team = Ateam(TeamIndex, MaxPlayer, 0,_name, msg.sender);
     League[msg.sender][TeamIndex] = Team;
     TeamOwner[TeamIndex] = msg.sender;
 
   }
 
 
-  function ReadyStart() public{
+  function ReadyStart() public ownerOnly{
     //準備要開始遊戲
     require(MaxPlayer > 9);
+
+
+  }
+
+  ///ˇˇˇ設定球員
+  function chooseBP(uint _BPID) public {
+    require(TeamOwner[TeamIndex] == msg.sender);
+    // 假設現在有一個array是球員array
+    //TeamOwner[array.push(_BPID)];  <--不知道可不可以這樣ＸＤ
+
+
 
 
   }
